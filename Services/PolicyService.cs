@@ -36,6 +36,8 @@ namespace GAP.Insurance.Services
         {
             var newPolicy = _insuranceContext.Policies.Add(policy);
 
+            _insuranceContext.SaveChanges();
+
             return newPolicy.Entity;
         }
 
