@@ -1,4 +1,5 @@
-﻿using GAP.Insurance.Context;
+﻿using AutoMapper;
+using GAP.Insurance.Context;
 using GAP.Insurance.Entities;
 using GAP.Insurance.Models;
 using GAP.Insurance.Services.Interface;
@@ -27,7 +28,9 @@ namespace GAP.Insurance.Controllers
         {
             var policies = _policyService.GetPolicies();
 
-            return Ok(policies);
+            var policiesDto = Mapper.Map<List<PolicyDto>>(policies);
+
+            return Ok(policiesDto);
         }
 
         [Route("{id}")]
@@ -44,11 +47,21 @@ namespace GAP.Insurance.Controllers
 
         [Route("")]
         [HttpPost]
-        public ActionResult<Policy> AddPolicy(Policy policy)
+        public ActionResult<PolicyDto> AddPolicy(PolicyCreateDto policyCreateDto)
         {
+            if (policyCreateDto == null)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var policy = Mapper.Map<Policy>(policyCreateDto);
+
             var newPolicy = _policyService.AddPolicy(policy);
 
-            return Ok(newPolicy);
+            var newPolicyDto = Mapper.Map<PolicyDto>(newPolicy);
+
+            return Ok(newPolicyDto);
         }
 
         [Route("")]
