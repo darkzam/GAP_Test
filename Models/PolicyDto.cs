@@ -13,11 +13,13 @@ namespace GAP.Insurance.Models
 
         public string DateStart { get; set; }
 
-        public string Period { get; set; }
+        public string DateEnd { get; set; }
 
-        public string CoverageTypeName { get; set; }
+        public int Period { get; set; }
 
-        public string RiskTypeName { get; set; }
+        public int CoverageTypeId { get; set; }
+
+        public int RiskTypeNameId { get; set; }
 
     }
 }

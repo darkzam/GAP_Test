@@ -2,10 +2,13 @@ C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\bin\Debug\netcoreapp2.1\
 C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\bin\Debug\netcoreapp2.1\GAP.Insurance.runtimeconfig.json
 C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\bin\Debug\netcoreapp2.1\GAP.Insurance.runtimeconfig.dev.json
 C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\bin\Debug\netcoreapp2.1\GAP.Insurance.dll
-C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.csprojAssemblyReference.cache
+C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\bin\Debug\netcoreapp2.1\GAP.Insurance.pdb
 C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.csproj.CoreCompileInputs.cache
 C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.RazorAssemblyInfo.cache
 C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.RazorAssemblyInfo.cs
 C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.AssemblyInfoInputs.cache
 C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.AssemblyInfo.cs
 C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.RazorTargetAssemblyInfo.cache
+C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.dll
+C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.pdb
+C:\Users\Zam\AspNetProjects\GAP.Insurance\GAP.Insurance\obj\Debug\netcoreapp2.1\GAP.Insurance.csprojAssemblyReference.cache

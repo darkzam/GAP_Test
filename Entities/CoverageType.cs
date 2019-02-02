@@ -12,8 +12,8 @@ namespace GAP.Insurance.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(200)]
-        public int Name { get; set; }
+        [MaxLength(100)]
+        public string Name { get; set; }
 
         [Required]
         public double Coverage { get; set; }

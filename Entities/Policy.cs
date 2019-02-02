@@ -21,10 +21,13 @@ namespace GAP.Insurance.Entities
         public string Description { get; set; }
 
         [Required]
+        public DateTime Date { get; set; }
+
+        [Required]
         public int Period { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public double Price { get; set; }
 
         [ForeignKey("CoverageTypeId")]
         public CoverageType CoverageType { get; set; }
