@@ -10,6 +10,7 @@ using GAP.Insurance.Services.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,12 +31,11 @@ namespace GAP.Insurance
         {
             services.AddDbContext<InsuranceContext>(options => options.UseSqlServer(_configuration.GetConnectionString("Gap.Insurance")));
 
-            services.AddMvc().AddJsonOptions(jsonOptions =>
-                jsonOptions.SerializerSettings.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Error
-            )
-            .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IPolicyService, PolicyService>();
+
+            services.AddScoped<ICoverageTypeService, CoverageTypeService>();
 
         }
 
@@ -71,6 +71,7 @@ namespace GAP.Insurance
                  Convert.ToDateTime(src.Date)
                  ));
 
+                cfg.CreateMap<CoverageTypeDto, CoverageType>();
 
             });
 
