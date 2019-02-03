@@ -8,15 +8,19 @@ namespace GAP.Insurance.Services.Interface
 {
     public interface ICoverageTypeService
     {
-        List<CoverageType> CoverageTypes();
+        List<CoverageType> GetCoverageTypes();
 
-        CoverageType CoverageTypeById(string Id);
+        CoverageType GetCoverageTypeById(int id);
 
         CoverageType AddCoverageType(CoverageType coverageType);
 
-        CoverageType UpdateCoverageType(CoverageType coverageType);
+        void UpdateCoverageType(CoverageType coverageType);
 
         void DeleteCoverageType(CoverageType coverageType);
+
+        bool CoverageTypeExists(int ind);
+
+        bool Save();
 
     }
 }

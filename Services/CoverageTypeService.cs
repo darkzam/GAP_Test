@@ -10,7 +10,7 @@ namespace GAP.Insurance.Services
 {
     public class CoverageTypeService : ICoverageTypeService
     {
-        private InsuranceContext _insuranceContext;
+        private readonly InsuranceContext _insuranceContext;
 
         public CoverageTypeService(InsuranceContext insuranceContext)
         {
@@ -22,27 +22,36 @@ namespace GAP.Insurance.Services
             var coverage = _insuranceContext.CoverageTypes.Add(coverageType);
 
             return coverage.Entity;
-
         }
 
-        public CoverageType CoverageTypeById(string Id)
+        public CoverageType GetCoverageTypeById(int id)
         {
-            throw new NotImplementedException();
+            return _insuranceContext.CoverageTypes.FirstOrDefault(r => r.Id == id);
         }
 
-        public List<CoverageType> CoverageTypes()
+        public List<CoverageType> GetCoverageTypes()
         {
-            throw new NotImplementedException();
+            return _insuranceContext.CoverageTypes.ToList<CoverageType>();
         }
 
         public void DeleteCoverageType(CoverageType coverageType)
         {
-            throw new NotImplementedException();
+            _insuranceContext.CoverageTypes.Remove(coverageType);
         }
 
-        public CoverageType UpdateCoverageType(CoverageType coverageType)
+        public void UpdateCoverageType(CoverageType coverageType)
         {
-            throw new NotImplementedException();
+            _insuranceContext.CoverageTypes.Update(coverageType);
+        }
+
+        public bool CoverageTypeExists(int id)
+        {
+            return _insuranceContext.CoverageTypes.Any(r => r.Id == id);
+        }
+
+        public bool Save()
+        {
+            return (_insuranceContext.SaveChanges() >= 0);
         }
     }
 }

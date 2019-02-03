@@ -10,7 +10,7 @@ namespace GAP.Insurance.Services
 {
     public class PolicyService : IPolicyService
     {
-        public InsuranceContext _insuranceContext { get; set; }
+        public readonly InsuranceContext _insuranceContext;
 
         public PolicyService(InsuranceContext insuranceContext)
         {
