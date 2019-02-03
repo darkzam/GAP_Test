@@ -18,7 +18,7 @@ namespace GAP.Insurance.Services.Interface
 
         void DeleteCoverageType(CoverageType coverageType);
 
-        bool CoverageTypeExists(int ind);
+        bool CoverageTypeExists(int id);
 
         bool Save();
 

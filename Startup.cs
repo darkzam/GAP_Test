@@ -37,6 +37,8 @@ namespace GAP.Insurance
 
             services.AddScoped<ICoverageTypeService, CoverageTypeService>();
 
+            services.AddScoped<IRiskTypeService, RiskTypeService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +74,8 @@ namespace GAP.Insurance
                  ));
 
                 cfg.CreateMap<CoverageTypeDto, CoverageType>();
+
+                cfg.CreateMap<RiskTypeDto, RiskType>();
 
             });
 
