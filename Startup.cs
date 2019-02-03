@@ -66,7 +66,9 @@ namespace GAP.Insurance
                 cfg.CreateMap<Policy, PolicyDto>()
                 .ForMember(dest => dest.DateStart, opt => opt.MapFrom(src =>
                  $"{src.Date.ToString("dd-MM-yyyy")}"
-                 ));
+                 )).ForMember(dest => dest.DateEnd, opt => opt.MapFrom(src =>
+                 src.Date.AddMonths(src.Period).ToString("dd-MM-yyyy")
+                     ));
 
                 cfg.CreateMap<PolicyCreateDto, Policy>()
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src =>

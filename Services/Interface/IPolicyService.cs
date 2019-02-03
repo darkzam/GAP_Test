@@ -10,12 +10,18 @@ namespace GAP.Insurance.Services.Interface
     {
         List<Policy> GetPolicies();
 
-        Policy GetPolicyById(string Id);
+        Policy GetPolicyById(int id);
 
         Policy AddPolicy(Policy policy);
 
         void DeletePolicy(Policy policy);
 
-        Policy UpdatePolicy(Policy policy);
+        void UpdatePolicy(Policy policy);
+
+        bool PolicyExists(int id);
+
+        bool Save();
+
+        bool IsValidCoverage(RiskType riskType, CoverageType coverageType);
     }
 }

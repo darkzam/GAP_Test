@@ -61,7 +61,7 @@ namespace GAP.Insurance.Controllers
             var newCoverage = _coverageTypeService.AddCoverageType(coverage);
 
             if (!_coverageTypeService.Save())
-                throw new Exception($"Creating has failed.");
+                throw new Exception($"Creation has failed.");
 
             return CreatedAtRoute("GetCoverageTypeById",
                                    new { id = newCoverage.Id },
