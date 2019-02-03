@@ -18,37 +18,47 @@ namespace GAP.Insurance.Services
             _insuranceContext = insuranceContext;
         }
 
+        public Policy AddPolicy(Policy Policy)
+        {
+            var Risk = _insuranceContext.Policies.Add(Policy);
+
+            return Risk.Entity;
+        }
+
+        public Policy GetPolicyById(int id)
+        {
+            return _insuranceContext.Policies.FirstOrDefault(r => r.Id == id);
+        }
+
         public List<Policy> GetPolicies()
         {
-            var policies = _insuranceContext.Policies.ToList<Policy>();
-
-            return policies;
+            return _insuranceContext.Policies.ToList<Policy>();
         }
 
-        public Policy GetPolicyById(string Id)
+        public void DeletePolicy(Policy Policy)
         {
-            var policy = _insuranceContext.Policies.FirstOrDefault(r => r.Id == int.Parse(Id));
-
-            return policy;
+            _insuranceContext.Policies.Remove(Policy);
         }
 
-        public Policy AddPolicy(Policy policy)
+        public void UpdatePolicy(Policy Policy)
         {
-            var newPolicy = _insuranceContext.Policies.Add(policy);
-
-            _insuranceContext.SaveChanges();
-
-            return newPolicy.Entity;
+            _insuranceContext.Policies.Update(Policy);
         }
 
-        public void DeletePolicy(Policy policy)
+        public bool PolicyExists(int id)
         {
-            throw new NotImplementedException();
+            return _insuranceContext.Policies.Any(r => r.Id == id);
         }
 
-        public Policy UpdatePolicy(Policy policy)
+        public bool Save()
         {
-            throw new NotImplementedException();
+            return (_insuranceContext.SaveChanges() >= 0);
         }
+
+        public bool IsValidCoverage(RiskType riskType, CoverageType coverageType)
+        {
+            return !(string.Equals(riskType.Name.ToLower(), "alto") && coverageType.Coverage > 0.5); 
+        }
+
     }
 }

@@ -14,11 +14,11 @@ namespace GAP.Insurance.Controllers
     [ApiController]
     public class RiskTypeController : ControllerBase
     {
-        private readonly IRiskTypeService _RiskTypeService;
+        private readonly IRiskTypeService _riskTypeService;
 
         public RiskTypeController(IRiskTypeService RiskTypeService)
         {
-            _RiskTypeService = RiskTypeService;
+            _riskTypeService = RiskTypeService;
 
         }
 
@@ -26,7 +26,7 @@ namespace GAP.Insurance.Controllers
         [HttpGet]
         public ActionResult<List<RiskType>> GetRiskTypes()
         {
-            var RiskTypes = _RiskTypeService.GetRiskTypes();
+            var RiskTypes = _riskTypeService.GetRiskTypes();
 
             return Ok(RiskTypes);
         }
@@ -35,10 +35,10 @@ namespace GAP.Insurance.Controllers
         [HttpGet]
         public ActionResult<RiskType> GetRiskTypeById(int id)
         {
-            if (!_RiskTypeService.RiskTypeExists(id))
+            if (!_riskTypeService.RiskTypeExists(id))
                 return NotFound();
 
-            var RiskType = _RiskTypeService.GetRiskTypeById(id);
+            var RiskType = _riskTypeService.GetRiskTypeById(id);
 
             return Ok(RiskType);
         }
@@ -55,10 +55,10 @@ namespace GAP.Insurance.Controllers
 
             var Risk = Mapper.Map<RiskType>(RiskTypeDto);
 
-            var newRisk = _RiskTypeService.AddRiskType(Risk);
+            var newRisk = _riskTypeService.AddRiskType(Risk);
 
-            if (!_RiskTypeService.Save())
-                throw new Exception($"Creating has failed.");
+            if (!_riskTypeService.Save())
+                throw new Exception($"Creation has failed.");
 
             return CreatedAtRoute("GetRiskTypeById",
                                    new { id = newRisk.Id },
@@ -70,17 +70,17 @@ namespace GAP.Insurance.Controllers
         [HttpDelete]
         public ActionResult DeleteRiskType(int id)
         {
-            if (!_RiskTypeService.RiskTypeExists(id))
+            if (!_riskTypeService.RiskTypeExists(id))
                 return NotFound();
 
-            var RiskType = _RiskTypeService.GetRiskTypeById(id);
+            var RiskType = _riskTypeService.GetRiskTypeById(id);
 
             if (RiskType == null)
                 return NotFound();
 
-            _RiskTypeService.DeleteRiskType(RiskType);
+            _riskTypeService.DeleteRiskType(RiskType);
 
-            if (!_RiskTypeService.Save())
+            if (!_riskTypeService.Save())
                 throw new Exception($"Deleting has failed.");
 
             return NoContent();
@@ -93,16 +93,16 @@ namespace GAP.Insurance.Controllers
             if (RiskTypeDto == null)
                 return BadRequest();
 
-            if (!_RiskTypeService.RiskTypeExists(id))
+            if (!_riskTypeService.RiskTypeExists(id))
                 return NotFound();
 
-            var RiskType = _RiskTypeService.GetRiskTypeById(id);
+            var RiskType = _riskTypeService.GetRiskTypeById(id);
 
             Mapper.Map(RiskTypeDto, RiskType);
 
-            _RiskTypeService.UpdateRiskType(RiskType);
+            _riskTypeService.UpdateRiskType(RiskType);
 
-            if (!_RiskTypeService.Save())
+            if (!_riskTypeService.Save())
                 throw new Exception("Update has failed.");
 
             return NoContent();

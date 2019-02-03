@@ -22,8 +22,13 @@ namespace GAP.Insurance.Models
         [Required]
         public int Period { get; set;}
 
+        [Required]
+        public double Price { get; set; }
+
+        [Required]
         public int CoverageTypeId { get; set; }
 
+        [Required]
         public int RiskTypeId { get; set; }
 
     }

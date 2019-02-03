@@ -15,11 +15,17 @@ namespace GAP.Insurance.Controllers
     [ApiController]
     public class PolicyController : ControllerBase
     {
-        public IPolicyService _policyService { get; set; }
+        public readonly IPolicyService _policyService;
+        public readonly ICoverageTypeService _coverageTypeService;
+        public readonly IRiskTypeService _riskTypeService;
 
-        public PolicyController(IPolicyService policyService)
+        public PolicyController(IPolicyService policyService,
+                                ICoverageTypeService coverageTypeService,
+                                IRiskTypeService riskTypeService)
         {
             _policyService = policyService;
+            _coverageTypeService = coverageTypeService;
+            _riskTypeService = riskTypeService;
         }
 
         [Route("")]
@@ -33,51 +39,125 @@ namespace GAP.Insurance.Controllers
             return Ok(policiesDto);
         }
 
-        [Route("{id}")]
+        [Route("{id}", Name = "GetPolicyById")]
         [HttpGet]
-        public ActionResult<Policy> GetPolicyById(string id)
+        public ActionResult<PolicyDto> GetPolicyById(int id)
         {
+            if (!_policyService.PolicyExists(id))
+                return NotFound();
+
             var policy = _policyService.GetPolicyById(id);
 
             if (policy == null)
-                return NotFound("The resource could not be found.");
+                return NotFound();
 
-            return Ok(policy);
+            var policyDto = Mapper.Map<PolicyDto>(policy);
+
+            return Ok(policyDto);
         }
 
         [Route("")]
         [HttpPost]
-        public ActionResult<PolicyDto> AddPolicy(PolicyCreateDto policyCreateDto)
+        public ActionResult<Policy> AddPolicy(PolicyCreateDto policyCreateDto)
         {
             if (policyCreateDto == null)
                 return BadRequest();
 
+            if (!(policyCreateDto.Period > 0))
+                ModelState.AddModelError(nameof(policyCreateDto), "Period should be greater than zero.");
+
+            if (!(policyCreateDto.Price > 0))
+                ModelState.AddModelError(nameof(policyCreateDto), "Price should be greater than zero.");
+
             if (!ModelState.IsValid)
-                return BadRequest();
+                return new UnprocessableEntityObjectResult(ModelState);
+
+            //check if coverage exists
+            if (!_coverageTypeService.CoverageTypeExists(policyCreateDto.CoverageTypeId))
+                return NotFound("Coverage Type not found.");
+
+            //check if risk exists
+            if (!_riskTypeService.RiskTypeExists(policyCreateDto.RiskTypeId))
+                return NotFound("Risk Type not found.");
+
+            var coverageType = _coverageTypeService.GetCoverageTypeById(policyCreateDto.CoverageTypeId);
+            var riskType = _riskTypeService.GetRiskTypeById(policyCreateDto.RiskTypeId);
+
+            //check for a valid coverage porcentage if there's high risk
+            if (!_policyService.IsValidCoverage(riskType, coverageType))
+                return BadRequest($"Risk Type: {riskType.Name} requires coverage to be greater than 50%.");
 
             var policy = Mapper.Map<Policy>(policyCreateDto);
 
             var newPolicy = _policyService.AddPolicy(policy);
 
-            var newPolicyDto = Mapper.Map<PolicyDto>(newPolicy);
+            if (!_policyService.Save())
+                throw new Exception($"Create has failed.");
 
-            return Ok(newPolicyDto);
+            return CreatedAtRoute("GetPolicyById",
+                                   new { id = newPolicy.Id },
+                                   newPolicy
+                                   );
         }
 
-        [Route("")]
+        [Route("{id}")]
         [HttpDelete]
-        public ActionResult DeletePolicy(Policy policy)
+        public ActionResult DeletePolicy(int id)
         {
+            if (!_policyService.PolicyExists(id))
+                return NotFound();
+
+            var policy = _policyService.GetPolicyById(id);
+
+            if (policy == null)
+                return NotFound();
+
             _policyService.DeletePolicy(policy);
 
-            return Ok();
+            if (!_policyService.Save())
+                throw new Exception($"Delete has failed.");
+
+            return NoContent();
         }
 
-        public ActionResult<Policy> UpdatePolicy(Policy policy)
+        [Route("{id}")]
+        [HttpPut]
+        public ActionResult UpdatePolicy(int id, PolicyCreateDto policyCreateDto)
         {
-            var newPolicy = _policyService.UpdatePolicy(policy);
+            if (policyCreateDto == null)
+                return BadRequest();
 
-            return Ok(newPolicy);
+            if (!ModelState.IsValid)
+                return new UnprocessableEntityObjectResult(ModelState);
+
+            if (!_policyService.PolicyExists(id))
+                return NotFound();
+
+            //check if coverage exists
+            if (!_coverageTypeService.CoverageTypeExists(policyCreateDto.CoverageTypeId))
+                return NotFound("Coverage Type not found.");
+
+            //check if risk exists
+            if (!_riskTypeService.RiskTypeExists(policyCreateDto.RiskTypeId))
+                return NotFound("Risk Type not found.");
+
+            var coverageType = _coverageTypeService.GetCoverageTypeById(policyCreateDto.CoverageTypeId);
+            var riskType = _riskTypeService.GetRiskTypeById(policyCreateDto.RiskTypeId);
+
+            //check for a valid coverage porcentage if there's high risk
+            if (!_policyService.IsValidCoverage(riskType, coverageType))
+                return BadRequest($"Risk Type: {riskType.Name} requires coverage to be greater than 50%.");
+
+            var policy = _policyService.GetPolicyById(id);
+
+            Mapper.Map(policyCreateDto, policy);
+
+            _policyService.UpdatePolicy(policy);
+
+            if (!_policyService.Save())
+                throw new Exception("Update has failed.");
+
+            return NoContent();
         }
     }
 }
