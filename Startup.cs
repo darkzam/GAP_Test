@@ -31,6 +31,8 @@ namespace GAP.Insurance
         {
             services.AddDbContext<InsuranceContext>(options => options.UseSqlServer(_configuration.GetConnectionString("Gap.Insurance")));
 
+            services.AddCors();
+
             services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IPolicyService, PolicyService>();
@@ -89,6 +91,12 @@ namespace GAP.Insurance
                 cfg.CreateMap<ClientCreateDto, Client>();
 
             });
+
+            app.UseCors(options =>
+                       options.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials());
 
             app.UseMvc();
         }
