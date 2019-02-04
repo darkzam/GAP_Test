@@ -73,6 +73,12 @@ namespace GAP.Insurance
                  $"{src.Date.ToString("dd-MM-yyyy")}"
                  )).ForMember(dest => dest.DateEnd, opt => opt.MapFrom(src =>
                  src.Date.AddMonths(src.Period).ToString("dd-MM-yyyy")
+                     )).ForMember(dest => dest.CoverageName, opt => opt.MapFrom(src =>
+                 src.CoverageType.Name
+                     )).ForMember(dest => dest.CoveragePorcentage, opt => opt.MapFrom(src =>
+                 src.CoverageType.Coverage
+                     )).ForMember(dest => dest.RiskName, opt => opt.MapFrom(src =>
+                 src.RiskType.Name
                      ));
 
                 cfg.CreateMap<Client, ClientDto>().ForMember(dest => dest.FullName, opt => opt.MapFrom(src =>
