@@ -21,5 +21,12 @@ namespace GAP.Insurance.Context
 
         public DbSet<Client> Clients { get; set; }
 
+        public DbSet<Assignment> Assignments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Assignment>()
+                .HasKey(c => new { c.ClientId, c.PolicyId });
+        }
     }
 }

@@ -4,14 +4,16 @@ using GAP.Insurance.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GAP.Insurance.Migrations
 {
     [DbContext(typeof(InsuranceContext))]
-    partial class InsuranceContextModelSnapshot : ModelSnapshot
+    [Migration("20190204012145_ThirdMigration")]
+    partial class ThirdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,11 +23,11 @@ namespace GAP.Insurance.Migrations
 
             modelBuilder.Entity("GAP.Insurance.Entities.Assignment", b =>
                 {
-                    b.Property<int>("ClientId");
+                    b.Property<int>("UserId");
 
                     b.Property<int>("PolicyId");
 
-                    b.HasKey("ClientId", "PolicyId");
+                    b.HasKey("UserId", "PolicyId");
 
                     b.ToTable("Assignments");
                 });
