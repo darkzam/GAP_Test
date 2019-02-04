@@ -39,6 +39,7 @@ namespace GAP.Insurance
 
             services.AddScoped<IRiskTypeService, RiskTypeService>();
 
+            services.AddScoped<IClientService, ClientService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +71,10 @@ namespace GAP.Insurance
                  src.Date.AddMonths(src.Period).ToString("dd-MM-yyyy")
                      ));
 
+                cfg.CreateMap<Client, ClientDto>().ForMember(dest => dest.FullName, opt => opt.MapFrom(src =>
+                 $"{src.Name} {src.LastName}"
+                 ));
+
                 cfg.CreateMap<PolicyCreateDto, Policy>()
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src =>
                  Convert.ToDateTime(src.Date)
@@ -78,6 +83,8 @@ namespace GAP.Insurance
                 cfg.CreateMap<CoverageTypeDto, CoverageType>();
 
                 cfg.CreateMap<RiskTypeDto, RiskType>();
+
+                cfg.CreateMap<ClientCreateDto, Client>();
 
             });
 
