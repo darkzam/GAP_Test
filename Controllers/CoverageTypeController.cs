@@ -97,6 +97,12 @@ namespace GAP.Insurance.Controllers
             if (coverageTypeDto == null)
                 return BadRequest();
 
+            if (!(coverageTypeDto.Coverage > 0 && coverageTypeDto.Coverage <= 1))
+                ModelState.AddModelError(nameof(coverageTypeDto), "Coverage should be greater than zero and up to one.");
+
+            if (!ModelState.IsValid)
+                return new UnprocessableEntityObjectResult(ModelState);
+
             if (!_coverageTypeService.CoverageTypeExists(id))
                 return NotFound();
 
