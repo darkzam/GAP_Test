@@ -70,13 +70,13 @@ namespace GAP.Insurance
             {
                 cfg.CreateMap<Policy, PolicyDto>()
                 .ForMember(dest => dest.DateStart, opt => opt.MapFrom(src =>
-                 $"{src.Date.ToString("dd-MM-yyyy")}"
+                 $"{src.Date.ToString("yyyy/MM/dd")}"
                  )).ForMember(dest => dest.DateEnd, opt => opt.MapFrom(src =>
-                 src.Date.AddMonths(src.Period).ToString("dd-MM-yyyy")
+                 src.Date.AddMonths(src.Period).ToString("yyyy/MM/dd")
                      )).ForMember(dest => dest.CoverageName, opt => opt.MapFrom(src =>
                  src.CoverageType.Name
                      )).ForMember(dest => dest.CoveragePorcentage, opt => opt.MapFrom(src =>
-                 src.CoverageType.Coverage
+                 src.CoverageType.Coverage * 100
                      )).ForMember(dest => dest.RiskName, opt => opt.MapFrom(src =>
                  src.RiskType.Name
                      ));
