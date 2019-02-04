@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GAP.Insurance.Entities;
 using GAP.Insurance.Services.Interface;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

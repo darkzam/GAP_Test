@@ -19,6 +19,5 @@ namespace GAP.Insurance.Entities
         [MaxLength(50)]
         public string LastName { get; set; }
 
-        List<Assignment> Assignments = new List<Assignment>();
     }
 }

@@ -3,6 +3,7 @@ using GAP.Insurance.Context;
 using GAP.Insurance.Entities;
 using GAP.Insurance.Models;
 using GAP.Insurance.Services.Interface;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
