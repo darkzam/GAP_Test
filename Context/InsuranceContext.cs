@@ -19,5 +19,7 @@ namespace GAP.Insurance.Context
 
         public DbSet<RiskType> RiskTypes { get; set; }
 
+        public DbSet<Client> Clients { get; set; }
+
     }
 }
