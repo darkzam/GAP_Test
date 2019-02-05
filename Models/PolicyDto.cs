@@ -23,7 +23,13 @@ namespace GAP.Insurance.Models
 
         public int CoverageTypeId { get; set; }
 
+        public string CoverageName { get; set; }
+
+        public double CoveragePorcentage { get; set; }
+
         public int RiskTypeId { get; set; }
+
+        public string RiskName { get; set; }
 
     }
 }

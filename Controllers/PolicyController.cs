@@ -35,6 +35,20 @@ namespace GAP.Insurance.Controllers
         {
             var policies = _policyService.GetPolicies();
 
+            foreach(var policy in policies)
+            {
+                //check if coverage exists
+                if (!_coverageTypeService.CoverageTypeExists(policy.CoverageTypeId))
+                    return NotFound("Coverage Type not found.");
+
+                //check if risk exists
+                if (!_riskTypeService.RiskTypeExists(policy.RiskTypeId))
+                    return NotFound("Risk Type not found.");
+
+                policy.CoverageType = _coverageTypeService.GetCoverageTypeById(policy.CoverageTypeId);
+                policy.RiskType = _riskTypeService.GetRiskTypeById(policy.RiskTypeId);
+            }
+
             var policiesDto = Mapper.Map<List<PolicyDto>>(policies);
 
             return Ok(policiesDto);
